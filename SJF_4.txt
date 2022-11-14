@@ -1,0 +1,73 @@
+package SJF;
+import java.util.Scanner;
+public class SJF
+{
+	public static void main(String[]args)
+	{
+		Scanner sc = new Scanner(System.in);
+		int pid[]=new int[20];
+		int at[]=new int[20];
+		int bt[]=new int[20];
+		int ct[]=new int[20];
+		int tat[]=new int[20];
+		int wt[]=new int[20];
+		int f[]=new int[20];
+		int k[]=new int[20];
+		int tot=0,st=0;
+		float avg1=0,avg2=0;
+		System.out.println("Enter the total number of processes you want to execute: ");
+		int n=sc.nextInt();
+		for(int i=0;i<n;i++)
+		{
+			System.out.println("Enter the Arrival Time of "+(i+1)+" process");
+			at[i]=sc.nextInt();
+			System.out.println("Enter the Burst Time of "+(i+1)+" process");
+			bt[i]=sc.nextInt();
+			pid[i]=i+1;
+			k[i]=bt[i];
+		}
+		while(true)
+		{
+			int min=99,c=n;
+			if(tot==n)
+				break;
+			for(int i=0;i<n;i++)
+			{
+				if(at[i]<=st && f[i]==0 && bt[i]<min)
+				{
+					min=bt[i];
+					c=i;
+				}
+			}
+			if(c==n)
+				st++;
+			else
+			{
+				bt[c]--;
+				st++;
+				if(bt[c]==0)
+				{
+					ct[c]=st;
+					f[c]=1;
+					tot++;
+				}
+			}
+		}
+		for(int i=0;i<n;i++)
+		{
+			tat[i]=ct[i]-at[i];
+			wt[i]=tat[i]-k[i];
+			avg1 += tat[i];
+			avg2 += wt[i];
+		}
+		System.out.println("\nPid Arrival Burst Complete TurnAround Waiting");
+		for(int i=0;i<n;i++)
+		{
+			System.out.println(pid[i]+"\t"+at[i]+"\t"+k[i]+"\t"+ct[i]+"\t"+tat[i]+"\t"+wt[i]);
+		}
+		System.out.println("The average Turn Around Time is: "+avg1/n);
+		System.out.println("The average Waiting Time is: "+avg2/n);
+	}
+}
+
+// SJF similar to RR

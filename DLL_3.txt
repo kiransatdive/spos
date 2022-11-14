@@ -1,0 +1,5 @@
+int a, b; 
+ a  = Integer.parseInt(jTextField1.getText());
+ b = Integer.parseInt(jTextField2.getText()); 
+int c = a + b; 
+jTextField3.setText(" "+c);

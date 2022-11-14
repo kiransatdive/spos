@@ -1,0 +1,24 @@
+package FIFO;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class FIFO 
+{
+    public static void main(String[] args) 
+    {
+        Queue<String> queue = new LinkedList<String>();
+            queue.add("100");
+            queue.add("200");
+            queue.add("300");
+            queue.add("400");
+            queue.add("500");
+        System.out.println("Elements of queue-" + queue);
+        String value=(String)queue.remove();
+        System.out.println("removed element-" + value);
+        System.out.println("the newly created queue is: "+queue);
+        String head = (String)queue.peek();
+        System.out.println("head of queue-" + head);
+        int size = queue.size();
+        System.out.println("Size of queue-" + size);
+    }
+}

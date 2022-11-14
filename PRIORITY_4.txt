@@ -1,0 +1,73 @@
+package priority;
+import java.util.*;
+public class Priority 
+{
+    public static void main(String[] args)
+    {
+        int sum=0;
+        float total_tat=0,total_wt=0;
+        
+          Scanner s=new Scanner(System.in);
+          
+          int at[]=new int[20];
+          int cpu[]=new int[20];
+          int pri[]=new int[20];
+          int f[]=new int[20];
+          int tat[]=new int[20];
+          int wt[]=new int[20];
+          int pid[]=new int[20];
+          System.out.println("Enter Number Of Process You want to Execute---"); 
+          int n=s.nextInt();
+          for(int i=0;i<n;i++)
+          {
+                System.out.println("Enter arrival time of "+(i+1)+" Process : ");
+                at[i]=s.nextInt();
+                System.out.println("Enter CPU time of "+(i+1)+" Process : ");
+                cpu[i]=s.nextInt();
+                System.out.println("Enter Priority of "+(i+1)+" Process : ");
+                pri[i]=s.nextInt();
+                pid[i]=i+1;
+          }
+          for(int i=0;i<n-1;i++)
+          {
+                for(int j=i+1;j<n;j++)
+                {
+                        if(pri[i]>pri[j])
+                        {
+                            int temp=cpu[i];
+                            cpu[i]=cpu[j];
+                            cpu[j]=temp;
+                                
+                            temp=pid[i];
+                            pid[i]=pid[j];
+                            pid[j]=temp;
+                                
+                            temp=pri[i];
+                            pri[i]=pri[j];
+                            pri[j]=temp;   
+                        }
+                }
+          }
+          
+          for(int i=0;i<n;i++)
+          {
+                sum=sum+cpu[i];
+                f[i]=sum;
+          }
+          for(int i=0;i<n;i++)
+          {
+                tat[i]=f[i]-at[i];
+                total_tat=total_tat+tat[i];
+                wt[i]=tat[i]-cpu[i];
+                total_wt+=wt[i];
+          }
+          System.out.println("\n\nProcess\t\tAT\tCPU_T");
+          for(int i=0;i<n;i++)
+          {
+                System.out.println(pid[i]+"\t\t"+at[i]+"\t"+cpu[i]);
+          }
+          System.out.println("\n\n");
+          System.out.println("Total turn around time is : "+(total_tat/n));
+          System.out.println("Total waiting time is : "+(total_wt/n));                         
+    }
+}

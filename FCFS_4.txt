@@ -1,0 +1,71 @@
+package FCFS;
+import java.util.Scanner;
+public class FCFS
+{
+    public static void main(String[]args)
+	{
+            Scanner sc = new Scanner(System.in);
+            int pid[]=new int[20];
+            int at[]=new int[20];
+            int bt[]=new int[20];
+            int ct[]=new int[20];
+            int tat[]=new int[20];
+            int wt[]=new int[20];
+            int temp;
+            float avg1=0,avg2=0;
+            System.out.println("Enter the total number of processes you want to execute: ");
+            int n=sc.nextInt();
+            for(int i=0;i<n;i++)
+            {
+		System.out.println("Enter the Arrival Time of "+(i+1)+" process");
+		at[i]=sc.nextInt();
+		System.out.println("Enter the burst time of "+(i+1)+" process");
+		bt[i]=sc.nextInt();
+		pid[i]=i+1;
+            }
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<n-(i+1);j++)
+                {
+                    if(at[i]>at[i+1])
+                    {
+                        temp=at[i];
+                        at[i]=at[i+1];
+                        at[i+1]=temp;
+                        temp=bt[i];
+                        bt[i]=bt[i+1];
+                        bt[i+1]=temp;
+                    }
+                }
+            }
+            for(int i=0;i<n;i++)
+            {
+		if(i==0)
+		{
+                    ct[i]=at[i]+bt[i];
+		}
+		else
+		{
+                    if(at[i]>ct[i-1])
+		    {
+			ct[i]=at[i]+bt[i];
+                    }
+                    else
+                    {
+			ct[i]=ct[i-1]+bt[i];
+                    }
+		}
+		tat[i]=ct[i]-at[i];
+		wt[i]=tat[i]-bt[i];
+		avg1 +=tat[i];
+		avg2 +=wt[i];
+            }
+            System.out.println("\nPid ArrivalT BurstT CompleteT TurnAroundT WaitingT");
+            for(int i=0;i<n;i++)
+            {
+		System.out.println(pid[i]+"\t"+at[i]+"\t"+bt[i]+"\t"+ct[i]+"\t"+tat[i]+"\t"+wt[i]);
+            }
+            System.out.println("The average Turn Around Tim is: "+avg1/n);
+            System.out.println("The average Waiting Time is: "+avg2/n);
+	}
+}

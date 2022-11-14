@@ -1,0 +1,91 @@
+package Robin;
+import java.util.Scanner;
+public class Robin
+{
+    public static void main(String[]args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int pid[]=new int[20];
+        int at[]=new int[20];
+        int cpu[]=new int[20];
+        int ncpu[]=new int[20];
+        int f[]=new int[20];
+        int tat[]=new int[20];
+        int seq[]=new int[20];
+        int wt[]=new int[20];
+        int tq;
+        float total_tat=0,total_wt=0;
+        int sum=0,tempsum=0,k=0,difference;
+        System.out.println("Enter the total number of processes you want to execute: ");
+        int n=sc.nextInt();
+        for(int i=0;i<n;i++)
+        {
+            System.out.println("Enter the Arrival Time of "+(i+1)+" process");
+            at[i]=sc.nextInt();
+            System.out.println("Enter the CPU Time of "+(i+1)+" process");
+            cpu[i]=ncpu[i]=sc.nextInt();
+            pid[i]=i+1;
+        }
+        System.out.println("Enter the Time quantum: ");
+        tq=sc.nextInt();
+        int tv=0;
+        for(int i=0;i<n;i++)
+        {
+            tempsum=tempsum+cpu[i];
+        }
+        System.out.println("The process Execution Sequence is: ");
+        while(sum!=tempsum)
+        {
+            for(int i=0;i<n;i++)
+            {
+                if(ncpu[i]<tq)
+                {
+                    difference=ncpu[i];
+                    tv=ncpu[i];
+                    ncpu[i]=0;
+                }
+                else
+                {
+                    difference=ncpu[i]-tq;
+                    tv=tq;
+                    ncpu[i]=difference;
+                }
+                if(tv>0)
+                {
+                    sum=sum+tv;
+                    f[k]=sum;
+                    seq[k]=i;
+                    System.out.print(seq[k]+1+" ");
+                    k++;
+                }
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            int carr=0,tt=0;
+            carr=at[i];
+            for(int j=0;j<k;j++)
+            {
+                if(seq[j]==i)
+                {
+                    tt=tt+(f[j]-carr);
+                    carr=f[j];
+                }
+            }
+            tat[i]=tt;
+            wt[i]=tat[i]-cpu[i];
+            System.out.println("The Turn Around Time for "+(i+1)+" process"+tat[i]);
+            System.out.println("The Waiting Time for "+(i+1)+" process"+wt[i]);
+            total_tat=total_tat+tat[i];
+            total_wt +=wt[i];
+        }
+        System.out.println("\nPid\tArrival\tCPU");
+        for(int i=0;i<n;i++)
+        {
+            System.out.println(pid[i]+"\t"+at[i]+"\t"+cpu[i]+"\t");
+        }
+        System.out.println("The total Turn around time is: "+total_tat);
+        System.out.println("The total Waiting time is: "+total_wt);
+        sc.close();
+    }
+}
